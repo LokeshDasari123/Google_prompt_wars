@@ -1,0 +1,63 @@
+.
+|____backend
+| |____tests
+| | |______pycache__
+| | | |____test_api.cpython-312-pytest-9.0.3.pyc
+| | |____test_api.py
+| |____app
+| | |______init__.py
+| | |____db
+| | | |____database.py
+| | | |____models.py
+| | | |______pycache__
+| | | | |____models.cpython-312.pyc
+| | | | |____database.cpython-312.pyc
+| | |____core
+| | | |______pycache__
+| | | | |____ai_service.cpython-312.pyc
+| | | |____ai_service.py
+| | |____config.py
+| | |______pycache__
+| | | |____config.cpython-312.pyc
+| | | |____main.cpython-312.pyc
+| | | |______init__.cpython-312.pyc
+| | |____api
+| | | |____dependencies.py
+| | | |______init__.py
+| | | |____endpoints
+| | | | |____ai_match.py
+| | | | |______init__.py
+| | | | |____meetups.py
+| | | | |______pycache__
+| | | | | |____users.cpython-312.pyc
+| | | | | |____endpoints.cpython-312.pyc
+| | | | | |____meetups.cpython-312.pyc
+| | | | | |____ai_match.cpython-312.pyc
+| | | | | |______init__.cpython-312.pyc
+| | | | |____users.py
+| | | | |____endpoints.py
+| | | |______pycache__
+| | | | |______init__.cpython-312.pyc
+| | |____main.py
+| | |____schemas
+| | | |____meetup_schema.py
+| | | |____user_schema.py
+| | | |______pycache__
+| | | | |____meetup_schema.cpython-312.pyc
+| | | | |____user_schema.cpython-312.pyc
+| |____requirements.txt
+|____models.py
+|____test_models.py
+|____README.md
+|____Dockerfile
+|______pycache__
+| |____models.cpython-312.pyc
+| |____database.cpython-312.pyc
+| |____main.cpython-312.pyc
+|____reset_db.py
+|____frontend
+| |____index.html
+| |____style.css
+| |____app.js
+|____tree_output.txt
+|____test_api.py

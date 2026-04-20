@@ -6,3 +6,6 @@ cloud-sql-python-connector[pg8000]
 google-cloud-aiplatform
 pydantic
 pydantic-settings
+pytest
+httpx
+pytest-asyncio

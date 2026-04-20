@@ -3,104 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus | Event AI</title>
+    <meta name="description" content="Nexus - AI-powered meetup matchmaking for tech conference and hackathon attendees, powered by Google Cloud Vertex AI.">
+    <title>Nexus | Smart Event Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
 
-<div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-gray-100">
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white text-center">
-        <i class="fas fa-network-wired text-3xl mb-2"></i>
+<main role="main" aria-label="Nexus Smart Event Companion Application">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-gray-100">
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white text-center">
+        <i class="fas fa-network-wired text-3xl mb-2" aria-hidden="true"></i>
         <h1 class="text-2xl font-bold tracking-tight">Nexus</h1>
         <p class="text-blue-100 text-sm mt-1">Smart Event Companion</p>
-    </div>
+    </header>
 
-    <div class="p-6">
-        <p class="text-gray-600 text-sm mb-4 text-center">Powered by Google Vertex AI. Tell us what you want to experience right now, and we'll route you.</p>
-        
+    <section class="p-6" aria-label="Meetup matchmaking form">
+        <p class="text-gray-600 text-sm mb-4 text-center" id="app-description">
+            Powered by Google Vertex AI. Tell us what you want to experience right now, and we'll route you to the perfect meetup.
+        </p>
+
         <div class="relative mb-6">
+            <label for="interestsInput" class="sr-only">Describe what you want to experience at this event</label>
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <i class="fas fa-search text-gray-400"></i>
+                <i class="fas fa-search text-gray-400" aria-hidden="true"></i>
             </div>
-            <input type="text" id="interestsInput" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-700" placeholder="e.g., I want to talk about AI and drink coffee">
+            <input
+                type="text"
+                id="interestsInput"
+                name="interests"
+                aria-label="Describe what you want to experience at this event"
+                aria-describedby="app-description"
+                aria-required="true"
+                autocomplete="off"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-700"
+                placeholder="e.g., I want to talk about AI and drink coffee"
+            >
         </div>
-        
-        <button id="matchBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+
+        <button
+            id="matchBtn"
+            type="button"
+            aria-label="Find my best meetup match using AI"
+            aria-live="polite"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2"
+        >
             <span>Find My Match</span>
-            <i class="fas fa-arrow-right"></i>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
         </button>
-        
-        <div id="loader" class="hidden mt-6 text-center">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-2"></div>
+
+        <div
+            id="loader"
+            class="hidden mt-6 text-center"
+            role="status"
+            aria-live="polite"
+            aria-label="AI is processing your request"
+        >
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-2" aria-hidden="true"></div>
             <p class="text-sm text-gray-500 font-medium animate-pulse">Vertex AI is analyzing crowd data...</p>
         </div>
-        
-        <div id="resultBox" class="hidden mt-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 p-5 shadow-sm">
+
+        <section
+            id="resultBox"
+            class="hidden mt-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 p-5 shadow-sm"
+            role="region"
+            aria-label="AI matchmaking result"
+            aria-live="polite"
+        >
             <div class="flex items-start gap-3 mb-3">
-                <div class="bg-green-100 p-2 rounded-lg mt-1">
+                <div class="bg-green-100 p-2 rounded-lg mt-1" aria-hidden="true">
                     <i class="fas fa-check-circle text-green-600"></i>
                 </div>
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-indigo-500">Match Found</span>
-                    <h3 id="matchTitle" class="text-lg font-bold text-gray-800 leading-tight mt-1"></h3>
+                    <h2 id="matchTitle" class="text-lg font-bold text-gray-800 leading-tight mt-1"></h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-2 text-sm text-gray-600 mb-3 bg-white p-2 rounded-md border border-gray-100">
-                <i class="fas fa-map-marker-alt text-red-500"></i>
-                <span id="matchLocation" class="font-medium"></span>
+                <i class="fas fa-map-marker-alt text-red-500" aria-hidden="true"></i>
+                <address id="matchLocation" class="font-medium not-italic"></address>
             </div>
-            
-            <p id="matchInsight" class="text-sm text-gray-700 italic border-l-4 border-indigo-300 pl-3"></p>
-        </div>
-    </div>
-</div>
+
+            <blockquote id="matchInsight" class="text-sm text-gray-700 italic border-l-4 border-indigo-300 pl-3"></blockquote>
+        </section>
+    </section>
+
+  </div>
+</main>
 
 <script>
     const API_BASE_URL = window.location.origin;
+    const matchBtn = document.getElementById('matchBtn');
+    const loader = document.getElementById('loader');
+    const resultBox = document.getElementById('resultBox');
 
-    document.getElementById('matchBtn').addEventListener('click', async () => {
-        const interests = document.getElementById('interestsInput').value;
-        const resultBox = document.getElementById('resultBox');
-        const loader = document.getElementById('loader');
+    /**
+     * Handle the Find My Match button click.
+     * Creates a user profile and requests an AI-powered meetup recommendation.
+     */
+    matchBtn.addEventListener('click', async () => {
+        const interestsInput = document.getElementById('interestsInput');
+        const interests = interestsInput.value.trim();
 
-        if (!interests) return alert("Please enter your interests.");
+        if (!interests) {
+            interestsInput.setAttribute('aria-invalid', 'true');
+            alert("Please describe what you want to experience at this event.");
+            return;
+        }
 
+        interestsInput.removeAttribute('aria-invalid');
         resultBox.classList.add('hidden');
         loader.classList.remove('hidden');
+        matchBtn.disabled = true;
+        matchBtn.setAttribute('aria-busy', 'true');
 
         try {
-            // THE FIX IS HERE: /api/v1/users/ 
             const userRes = await fetch(`${API_BASE_URL}/api/v1/users/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: "Guest", interests: interests })
             });
+
+            if (!userRes.ok) throw new Error(`User creation failed: ${userRes.status}`);
             const userData = await userRes.json();
 
-            // THE FIX IS HERE: /api/v1/match/
             const matchRes = await fetch(`${API_BASE_URL}/api/v1/match/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: userData.id })
             });
-            
+
+            if (!matchRes.ok) throw new Error(`Match generation failed: ${matchRes.status}`);
             const matchData = await matchRes.json();
-            
+
+            document.getElementById('matchTitle').textContent =
+                matchData.match_insight.title || "Match Found";
+            document.getElementById('matchLocation').textContent =
+                matchData.match_insight.location || "Check Event Map";
+            document.getElementById('matchInsight').textContent =
+                `"${matchData.match_insight.insight}"`;
+
             loader.classList.add('hidden');
-            
-            document.getElementById('matchTitle').innerText = matchData.match_insight.title || "Match Found";
-            document.getElementById('matchLocation').innerText = matchData.match_insight.location || "Check Event Map";
-            document.getElementById('matchInsight').innerText = `"${matchData.match_insight.insight}"`;
-            
             resultBox.classList.remove('hidden');
+            resultBox.focus();
 
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Nexus AI Engine Error:", error);
             loader.classList.add('hidden');
             alert("AI Engine disconnected. Please try again.");
+        } finally {
+            matchBtn.disabled = false;
+            matchBtn.removeAttribute('aria-busy');
         }
+    });
+
+    // Allow Enter key to trigger match
+    document.getElementById('interestsInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') matchBtn.click();
     });
 </script>
 </body>
