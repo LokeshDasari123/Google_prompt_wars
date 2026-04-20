@@ -90,9 +90,9 @@ def generate_match(request: MatchRequest) -> MatchResponse:
                 detail="No active meetups available for matching.",
             )
 
-        meetup_descriptions: list[str] = [
-            f"{m.title}: {m.description}" for m in meetups
-        ]
+        from app.core.utils import format_meetups
+
+        meetup_descriptions = format_meetups(meetups)
 
         logger.info(
             f"Generating AI match for user_id={user.id} "
